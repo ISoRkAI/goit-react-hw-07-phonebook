@@ -16,8 +16,6 @@ export default function App() {
   const dispatch = useDispatch();
 
   const addContact = ({ name, phone }) => {
-    console.log('name', name);
-    console.log('number', phone);
     if (
       contacts.find(contact => {
         return contact.name === name;

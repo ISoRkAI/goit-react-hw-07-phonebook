@@ -33,8 +33,6 @@ export const contactSlice = createSlice({
       };
     },
     [deleteContacts.fulfilled]: (state, action) => {
-      console.log('2', action);
-      console.log(action.payload.id);
       return {
         ...state,
         entities: state.entities.filter(
@@ -55,7 +53,6 @@ export const contactSlice = createSlice({
       };
     },
     [addContacts.fulfilled]: (state, action) => {
-      console.log('1', action);
       return {
         ...state,
         entities: [action.payload, ...state.entities],
