@@ -1,22 +1,78 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { defaultItem } from 'utils/DefaultItem';
 
-export const myContactSlice = createSlice({
+import {
+  fetchContacts,
+  deleteContacts,
+  addContacts,
+} from 'redux/contactsOperaion';
+
+export const contactSlice = createSlice({
   name: 'contacts',
   initialState: {
-    contacts: defaultItem,
+    entities: [],
+    isLoading: false,
+    error: null,
   },
-  reducers: {
-    addContact(state, action) {
-      state.contacts.push(action.payload);
+  extraReducers: {
+    [fetchContacts.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        entities: action.payload,
+      };
     },
-
-    remove(state, action) {
-      const index = state.contacts.findIndex(
-        task => task.id === action.payload
-      );
-      state.contacts.splice(index, 1);
+    [fetchContacts.pending]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+    [fetchContacts.rejected]: (state, action) => {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    },
+    [deleteContacts.fulfilled]: (state, action) => {
+      console.log('2', action);
+      console.log(action.payload.id);
+      return {
+        ...state,
+        entities: state.entities.filter(
+          contact => contact.id !== action.payload.id
+        ),
+      };
+    },
+    [deleteContacts.pending]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+    [deleteContacts.rejected]: (state, action) => {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    },
+    [addContacts.fulfilled]: (state, action) => {
+      console.log('1', action);
+      return {
+        ...state,
+        entities: [action.payload, ...state.entities],
+      };
+    },
+    [addContacts.pending]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+    [addContacts.rejected]: (state, action) => {
+      return {
+        ...state,
+        error: action.payload,
+      };
     },
   },
 });
-export const { addContact, remove } = myContactSlice.actions;
+export default contactSlice.reducer;

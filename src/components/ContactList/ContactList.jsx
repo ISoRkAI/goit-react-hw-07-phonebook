@@ -3,21 +3,24 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import css from './ContactList.module.css';
-const ContactList = ({ filter, onDeleteContact }) => {
+import { deleteContacts } from 'redux/contactsOperaion';
+const ContactList = ({ filter }) => {
   const dispatch = useDispatch();
 
   return (
     <ul className={css.list}>
       {filter.length > 0 &&
-        filter.map(({ id, name, number }) => (
+        filter.map(({ id, name, phone }) => (
           <li className={css.item} key={id}>
             <p className={css.text}>
-              {name}: {number}
+              {name}: {phone}
             </p>
             <button
               className={css.btnDelete}
               type="button"
-              onClick={() => dispatch(onDeleteContact(id))}
+              onClick={() => {
+                dispatch(deleteContacts(id));
+              }}
             >
               Delete
             </button>

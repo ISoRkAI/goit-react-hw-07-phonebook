@@ -1,19 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
+import { contactFilter } from 'redux/slices/filterSlice';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import css from './App.module.css';
+import * as contactsOperations from '../redux/contactsOperaion';
 
-import { addContact, remove } from 'redux/slices/contactSlice';
-import { contactFilter } from 'redux/slices/filterSlice';
+import css from './App.module.css';
+// import { remove } from 'redux/slices/contactSlice';
 
 export default function App() {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.entities);
   const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
 
-  const addContacts = ({ id, name, number }) => {
+  const addContact = ({ name, phone }) => {
+    console.log('name', name);
+    console.log('number', phone);
     if (
       contacts.find(contact => {
         return contact.name === name;
@@ -21,13 +25,11 @@ export default function App() {
     ) {
       return alert(`${name} is already in contacts`);
     }
-
     const contact = {
-      id,
       name,
-      number,
+      phone,
     };
-    dispatch(addContact(contact));
+    dispatch(contactsOperations.addContacts(contact));
   };
 
   const filterChange = e => {
@@ -38,13 +40,17 @@ export default function App() {
     return contact.name.toLowerCase().includes(filter.toLowerCase());
   });
 
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
+
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <ContactForm addContacts={addContacts} />
+      <ContactForm addContact={addContact} />
       <h2>Contacts</h2>
       <Filter filter={filterChange} />
-      <ContactList filter={filterContact} onDeleteContact={remove} />
+      <ContactList filter={filterContact} />
     </div>
   );
 }

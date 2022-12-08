@@ -1,27 +1,22 @@
 import { useState } from 'react';
-import shortid from 'shortid';
 
 import css from './ContactForm.module.css';
 
-export default function ContactForm({ addContacts }) {
+export default function ContactForm({ addContact }) {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const formNameChange = e => {
     setName(e.currentTarget.value);
   };
 
   const formNumberChange = e => {
-    setNumber(e.currentTarget.value);
+    setPhone(e.currentTarget.value);
   };
 
   const formSubmit = e => {
     e.preventDefault();
-    addContacts({
-      id: shortid.generate(),
-      name: name,
-      number: number,
-    });
+    addContact({ name, phone });
     e.currentTarget.reset();
   };
 
