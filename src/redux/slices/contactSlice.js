@@ -4,7 +4,7 @@ import {
   fetchContacts,
   deleteContacts,
   addContacts,
-} from 'redux/contactsOperaion';
+} from 'redux/contactsOperation';
 
 export const contactSlice = createSlice({
   name: 'contacts',

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import css from './ContactList.module.css';
-import { deleteContacts } from 'redux/contactsOperaion';
+import { deleteContacts } from 'redux/contactsOperation';
 const ContactList = ({ filter }) => {
   const dispatch = useDispatch();
 

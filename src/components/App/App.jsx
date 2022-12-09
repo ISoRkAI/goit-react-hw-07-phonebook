@@ -2,13 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { contactFilter } from 'redux/slices/filterSlice';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import * as contactsOperations from '../redux/contactsOperaion';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import Filter from '../Filter/Filter';
+import * as contactsOperations from '../../redux/contactsOperation';
 
 import css from './App.module.css';
-// import { remove } from 'redux/slices/contactSlice';
 
 export default function App() {
   const contacts = useSelector(state => state.contacts.entities);
